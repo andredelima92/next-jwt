@@ -1,11 +1,19 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../contexts/AuthContext";
 import styles from "../styles/Home.module.css";
+
+type FormDataRequest = {
+  email: string;
+  password: string;
+};
 
 export default function Home() {
   const { register, handleSubmit } = useForm();
+  const { signIn } = useContext(AuthContext);
 
-  const handleSignIn = (data) => {
-    console.log(data);
+  const handleSignIn = async ({ email, password }: FormDataRequest) => {
+    await signIn({ email, password });
   };
 
   return (
@@ -30,7 +38,7 @@ export default function Home() {
         </div>
         <div className="mb-3 form-check">
           <input
-            {...register("remember")}
+            // {...register("remember")}
             name="remember"
             type="checkbox"
             className="form-check-input"
